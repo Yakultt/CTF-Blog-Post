@@ -286,15 +286,6 @@ a{
     padding-right: 35px;
 }
 
-.col-8{
-    flex: 0 0 70%;
-    max-width: 70%;
-}
-
-.col-4{
-    flex: 0 0 30%;
-    max-width: 30%;
-}
 
 @media (max-width : 1024px){
     .row{
@@ -306,15 +297,6 @@ a{
         max-width: 50%;
     }
 
-    .col-8{
-        flex: 0 0 100%;
-        max-width: 100%;
-    }
-
-    .col-4{
-        flex: 0 0 100%;
-        max-width: 100%;
-    }
 
 }
 
