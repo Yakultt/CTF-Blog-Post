@@ -176,6 +176,15 @@ a{
     object-fit: cover;
 }
 
+.resume{
+    max-height: 85vh;      /* fit on screen */
+    width: auto;           /* keep aspect ratio */
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    object-fit: contain;   /* no cropping */
+}
+
 .rounded{
     height: 120px;
     width: 120px;
@@ -314,18 +323,10 @@ a{
     right: 0;
     height: 4em;
     z-index: 0;
-}
+}p
 
-.post-footer .post-author .author-avatar{
-    margin: 0 auto;
-    margin-bottom: 1em;
-    position: inherit;
-    z-index: 1;
-}
 
-.post-footer .post-comments .reply{
-    padding-left: 7em;
-}
+
 
 .form-control{
     width: 100%;
