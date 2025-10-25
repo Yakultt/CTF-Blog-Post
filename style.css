@@ -177,12 +177,12 @@ a{
 }
 
 .resume{
-    max-height: 85vh;      /* fit on screen */
-    width: auto;           /* keep aspect ratio */
+    max-height: 85vh; 
+    width: auto;    
     height: auto;
     display: block;
     margin: 0 auto;
-    object-fit: contain;   /* no cropping */
+    object-fit: contain; 
 }
 
 .rounded{
@@ -223,6 +223,13 @@ a{
     font-size: 18px;
     margin: 12px;
     color: var(--light);
+    font-family: 'Poppins', sans-serif;
+}
+
+.nav-link-dark{
+    font-size: 18px;
+    margin: 12px;
+    color: var(--dark);
     font-family: 'Poppins', sans-serif;
 }
 
