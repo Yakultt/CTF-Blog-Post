@@ -142,10 +142,6 @@ a{
 }
 
 
-.shadow{
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-}
-
 
 /* section styling */
  
@@ -256,7 +252,7 @@ a{
 /* ----------- end of article page ------- */
 
 
-/* ----------- sticky ------- */
+/* ----------- make the navigation bar sticky ------- */
 
 .sticky{
     position: fixed;
@@ -269,7 +265,7 @@ a{
     padding-top: 60px;
 }
 
-/* ----------- .sticky ------- */
+/* -----------end of sticky navigation bar ------- */
 
 
 
