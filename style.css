@@ -96,15 +96,7 @@ a{
     text-align: right;
 }
 
-.btn{
-    padding: 15px 20px;
-    border: none;
-}
 
-.btn-primary{
-    border-radius: 4px;
-    background-color: var(--secondary-color);
-}
 
 .object-fit{
     max-height: 120px;
@@ -434,6 +426,7 @@ a{
     }
 }
 
+/* when the website is less than 768 pixels. then display only two columns*/
 @media (max-width : 768px){
     .grid .grid-item{
         width: calc(50% - 20px);
@@ -445,6 +438,7 @@ a{
         padding-top: 40px 50px;
     }
 }
+
 
 @media (max-width : 574px){
     .toggle-button{
@@ -469,7 +463,7 @@ a{
     .collapse-toggle{
         max-height: 500px;
     }
-
+/*when the website is less than 574 pixels. then only show one column or grid */
     .grid .grid-item{
         width: calc(100% - 20px);
     }
