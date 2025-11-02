@@ -55,11 +55,11 @@
                         <!-- article heading -->
                         <div class="headings text-center">
                             <div class="category">
-                                <p class="nav-link-dark">Malware Analysis<p>
+                                <p class="nav-link-dark">Digital Forensics<p>
                             </div>
 
                             <div class="title">
-                                <h2 class="text-title text-dark display-1">Analyzing Malicious PDF documents</h2>
+                                <h2 class="text-title text-dark display-1">Memory Forensics with Volatility</h2>
                             </div>
 
                             <div class="meta">
@@ -77,36 +77,32 @@
 
                         <!-- content -->
                         <div class="content text-dark display-2 secondary-title mt-5">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum itaque 
-                                blanditiis adipisci aliquam dolore consequuntur fuga sed consectetur quas perspiciatis?
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum itaque 
-                                blanditiis adipisci aliquam dolore consequuntur fuga sed consectetur quas perspiciatis?
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum itaque 
-                                blanditiis adipisci aliquam dolore consequuntur fuga sed consectetur quas perspiciatis?
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum itaque 
-                                blanditiis adipisci aliquam dolore consequuntur fuga sed consectetur quas perspiciatis?
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum itaque 
-                                blanditiis adipisci aliquam dolore consequuntur fuga sed consectetur quas perspiciatis?
+                            <p> So in this CTF challenge, im given a virtual memory image called OtterCTF.vmem and told to try to find a flag within the 
+                                actual image. So for a forensics challenge involving memory, I usually use the tool Volatility. Its basically a tool that
+                                lets you analyze RAM captures (hence the name volatility) to find running processes, passwords, and sometimes even images or flags hidden by CTF creators.
+                                So one of the first things I like to do is to run the pslist plugin. This basically gives us a list of running procceses that are actually in this memory dump.
+                                This is going to show us the different executables someone might have ran during their session or maybe the files that they opened
+
                             </p>
 
-                            <img src="./assets/img3.jpg" alt="" 
-                            style="display:block; margin:1.5rem auto; width:60%; height:auto; border-radius:10px;">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum itaque 
-                                blanditiis adipisci aliquam dolore consequuntur fuga sed consectetur quas perspiciatis?
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum itaque 
-                                blanditiis adipisci aliquam dolore consequuntur fuga sed consectetur quas perspiciatis?
-                            </p>
-
-                            <img src="./assets/img3.jpg" alt="" 
+                            <img src="./article3images/1.png" alt="" 
                             style="display:block; margin:1.5rem auto; width:60%; height:auto; border-radius:10px;">
                             
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum itaque 
-                                blanditiis adipisci aliquam dolore consequuntur fuga sed consectetur quas perspiciatis?
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum itaque 
-                                blanditiis adipisci aliquam dolore consequuntur fuga sed consectetur quas perspiciatis?
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum itaque 
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum itaque 
-                                blanditiis adipisci aliquam dolore consequuntur fuga sed consectetur quas perspiciatis?
+                            
+                            <p> Now that I have taken a look at some of the processes ran by the user during the session, I am going to go back and run the
+                                windows.cmdline.CmdLine command to give us a similiar view to the pslist command, however it shows us the full command line
+                                that was executed with each of these procceses. You can see all the different windows processes, however something caught
+                                my eye. I saw that there was a path called Windows/system32/NOTEPAD.EXE which is open by Users/Rick/Desktop/Flag.txt (bingo).
+
+                            </p>
+
+                            <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin:1.5rem 0;">
+                            <img src="./article3images/2.png" style="width:48%; max-width:480px; height:auto; border-radius:10px; display:block;">
+                            <img src="./article3images/3.png" style="width:100%; max-width:800px; height:auto; border-radius:10px; display:block;">
+                            </div>
+                            
+                            <p> Now finally, I would just use the windows.filescan.Filescan command to extract the file on Rick's Desktop to get the command and then I would 
+                                end up with the flag
                             </p>
                         </div>
                     </article>

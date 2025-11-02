@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HaritSook</title>
+
+    <!-- link to icons-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- custom style.css file -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    
+    <!-- Header -->
+       <header id="header" class="bg-dark">
+           <nav class="container navbar">
+               <a href="/index.html" class="nav-brand text-light">
+                    HaritSook
+                </a>
+
+                <!-- toggle button -->
+                <button class="toggle-button">
+                    <span><i class="fas fa-bars"></i></span>
+                </button>
+
+                <!-- collapse on toggle button click -->
+                <div class="collapse">
+                    <ul class="navbar-nav">
+                        <a href="./index.html" class="nav-link">Home</a>
+                        <a href="./resume.html" class="nav-link">Resume</a>
+                    </ul>
+                </div>
+
+                  <!-- collapse on toggle button click -->
+                  <div class="collapse">
+                      <ul class="navbar-nav">
+                            <a href="mailto:HaritSook@gmail.com" class="nav-link"> <i class="fa-solid fa-envelope"></i> </a>
+                            <a href="https://www.linkedin.com/in/harit-sookmeewiriya-a9b87923b/" class="nav-link" target="_blank" rel="noopener noreferrer"> <i class="fa-brands fa-linkedin"></i> </a>
+                            <a href="https://github.com/Yakultt?tab=repositories" class="nav-link" target="_blank" rel="noopener noreferrer"> <i class="fa-brands fa-github"></i> </a>
+                      </ul>
+                  </div>
+           </nav>
+       </header>
+    <!-- end of header -->
+
+    <!-- Main Site -->
+       <main id="site-main">
+
+            <!-- Post Content -->
+                <section class="container">
+                    <article id="post">
+                        <!-- article heading -->
+                        <div class="headings text-center">
+                            <div class="category">
+                                <p class="nav-link-dark">Basic CTF Knowledge<p>
+                            </div>
+
+                            <div class="title">
+                                <h2 class="text-title text-dark display-1">Cracking Passwords with Hashcat
+                                </h2>
+                            </div>
+
+                            <div class="meta">
+                                <p class="link display-2 text-secondary px-1">
+                                    <i class="fas fa-clock text-primary"></i>  2/26/2025
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <!-- thumbnail  -->
+                        <div class="thumbnail mt-5">
+                            <img src="./assets/img5.jpg" class="thumbnail" alt="">
+                        </div>
+
+                        <!-- content -->
+                        <div class="content text-dark display-2 secondary-title mt-5">
+                            <p> So the first thing I want to do in this blog is to give an introduction as to how hashing works and collision attacks and how you can try to figure out the source string to a 
+                                certain hash. When you hash a string, you are basically sending it through a one way function where you take the string and then it outputs a fixed size string that is completely
+                                different from your source string. Now why would you do this? You would do this so you can safely store your hash in a directory like /etc/passwd where even if an attacker gets access
+                                to it, the hash is so weird that they cant decipher it (in theory). However, attackers learned that if you throw enough random words into the same hash function used, you can find the
+                                hashed string and find the source string. This is basically what hashcat does.
+
+                            </p>
+
+                            <img src="./article5images/1.png" alt="" 
+                            style="display:block; margin:1.5rem auto; width:60%; height:auto; border-radius:10px;">
+                            
+                            
+                            <p> So we are given the hash above, lets say we got this when someone leaked a /etc/passwd database and we retrieved this password thinking it
+                                is a password for a user account. Alright so just looking at the hash itself, I can see that its 32 hex characters long which is 16 bytes
+                                since each character takes up 4 bits. Alright knowing this I know thats its probably a md5 hash function. Now I just need to know what 
+                                I can put inside a md5 hash function to get this output. Basically a plug and chug. I'm going to use the hashcat command then followed
+                                by the flag -m to select the type of mode. Now you might be wondering, "Harit, how am I supposed to know what type of mode to use?". Good question!
+                                You can literally look up the mode on the hashcat website and see what types of modes there are and what modes you should pick for the types of hashes
+                                that you are dealing with.
+
+
+                            </p>
+
+                            <img src="./article5images/2.png" alt="" 
+                            style="display:block; margin:1.5rem auto; width:70%; height:auto; border-radius:10px;">
+                            
+                            <p> So mode 0, or the md5 mode deals with hashes that are 32 hex characters long and thats the one we are dealing with right now! So before I continue with the 
+                                command, I just want to explain real quick the whole syntax of the hashcat command. So first you would do hashcat [flags] [mode] [file that has hashes] 
+                                and then [the file that has the plaintext passwords that you wanna plug into the hashcat command to see if it matches]. For the last part of the command,
+                                im going to be using a built in file thats already in kali linux. You can find this file in the directory /usr/share/wordlists. Now this file is called the 
+                                rockyou.txt. Now a while ago there was this huge dataleak that compromised a lot of passwords and in the rockyou file, there was a lot of passwords that
+                                you can plug into the md5 function to see if it matches your current hash.
+                            </p>
+                            
+                            <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin:1.5rem 0;">
+                            <img src="./article5images/3.png" style="width:48%; max-width:480px; height:auto; border-radius:10px; display:block;">
+                            <img src="./article5images/4.png" style="width:100%; max-width:800px; height:auto; border-radius:10px; display:block;">
+                            </div>
+                            
+                            <p> I inputed the whole command to the terminal and you can see that hashcat is starting up. When it completes you can see that the hash that we were trying to 
+                                crack was "password". Cool!
+                                
+                        
+
+                                
+                            
+                            
+                            
+                            
+                            </p>
+                        </div>
+                    </article>
+
+            
+                            
+                        
+
+   
+
+
+    <!-- masonry libray for horizontal grid -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js" integrity="sha512-JRlcvSZAXT8+5SQQAvklXGJuxXTouyq8oIMaYERZQasB8SBDHZaUbeASsJWpk0UUrf89DP3/aefPPrlMR1h1yQ==" crossorigin="anonymous"></script>
+
+
+
+    <!-- custom javascript main.js file -->
+    <script src="main.js"></script>
+</body>
+</html>
