@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HaritSook</title>
+
+    <!-- link to icons-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- custom style.css file -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    
+    <!-- Header -->
+       <header id="header" class="bg-dark">
+           <nav class="container navbar">
+               <a href="/index.html" class="nav-brand text-light">
+                    HaritSook
+                </a>
+
+                <!-- toggle button -->
+                <button class="toggle-button">
+                    <span><i class="fas fa-bars"></i></span>
+                </button>
+
+                <!-- collapse on toggle button click -->
+                <div class="collapse">
+                    <ul class="navbar-nav">
+                        <a href="./index.html" class="nav-link">Home</a>
+                        <a href="./resume.html" class="nav-link">Resume</a>
+                    </ul>
+                </div>
+
+                  <!-- collapse on toggle button click -->
+                  <div class="collapse">
+                      <ul class="navbar-nav">
+                            <a href="mailto:HaritSook@gmail.com" class="nav-link"> <i class="fa-solid fa-envelope"></i> </a>
+                            <a href="https://www.linkedin.com/in/harit-sookmeewiriya-a9b87923b/" class="nav-link" target="_blank" rel="noopener noreferrer"> <i class="fa-brands fa-linkedin"></i> </a>
+                            <a href="https://github.com/Yakultt?tab=repositories" class="nav-link" target="_blank" rel="noopener noreferrer"> <i class="fa-brands fa-github"></i> </a>
+                      </ul>
+                  </div>
+           </nav>
+       </header>
+    <!-- end of header -->
+
+    <!-- Main Site -->
+       <main id="site-main">
+
+            <!-- Post Content -->
+                <section class="container">
+                    <article id="post">
+                        <!-- article heading -->
+                        <div class="headings text-center">
+                            <div class="category">
+                                <p class="nav-link-dark">Basic CTF Knowledge<p>
+                            </div>
+
+                            <div class="title">
+                                <h2 class="text-title text-dark display-1">Cracking Passwords with Hashcat (continued)
+                                </h2>
+                            </div>
+
+                            <div class="meta">
+                                <p class="link display-2 text-secondary px-1">
+                                    <i class="fas fa-clock text-primary"></i>  3/22/2025
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <!-- thumbnail  -->
+                        <div class="thumbnail mt-5">
+                            <img src="./assets/img6.jpg" class="thumbnail" alt="">
+                        </div>
+
+                        <!-- content -->
+                        <div class="content text-dark display-2 secondary-title mt-5">
+                            <p> So in this blog, this is just a continuation of the last blog and its going to be pretty short, but I just wanted to go over the test case on
+                                different hashing functions. So to recap, I have this hash that I want to find out the source string that this hash comes from. Now first I want
+                                to know what mode I should use in hashcat. Looking at the hash, I can tell that its 40 hex characters which probably tells me its a sha-1 hashing
+                                function and my theory remains correct as I looked at the website and I saw I should use the sha-1 mode (100) for this type of hash 
+
+                            </p>
+
+                            <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin:1.5rem 0;">
+                            <img src="./article6images/1.png" style="width:48%; max-width:480px; height:auto; border-radius:10px; display:block;">
+                            <img src="./article6images/2.png" style="width:100%; max-width:800px; height:auto; border-radius:10px; display:block;">
+                            </div>
+                            
+                            
+                            <p> Knowing this information, I am going to run the command hashcat again like last blog, however this time instead of using the 0 mode, since we
+                                are dealing with a sha-1 hash, I am going to use the 100 mode
+                            </p>
+
+                            <img src="./article6images/3.png" alt="" 
+                            style="display:block; margin:1.5rem auto; width:70%; height:auto; border-radius:10px;">
+                            
+                            <p> So after some time, it revealed that the password is hello! Now if I were to come across different hashes that were hased with 
+                                different hash functions, the process would stay pretty much the same. I just use hashcat and find out what mode I should use for the specific
+                                type of hash that im dealing with. Then I input the file that contains the hash and then input the file that I want to compare commonly use passwords
+                                and then in a matter of time I would get the hasH! Also, notice I input the file that contains the hash and not just the hash itself. This is because
+                                I can put multiple hashes into the same file and then hashcat would go through the whole process for each hash inside the file!
+                            </p>
+                            
+                            <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin:1.5rem 0;">
+                            <img src="./article6images/3.png" style="width:100%; max-width:480px; height:auto; border-radius:10px; display:block;">
+                            <img src="./article6images/4.png" style="width:100%; max-width:800px; height:auto; border-radius:10px; display:block;">
+                            </div>
+
+                                
+                            
+                            
+                            
+                            
+                            </p>
+                        </div>
+                    </article>
+
+            
+                            
+                        
+
+   
+
+
+    <!-- masonry libray for horizontal grid -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js" integrity="sha512-JRlcvSZAXT8+5SQQAvklXGJuxXTouyq8oIMaYERZQasB8SBDHZaUbeASsJWpk0UUrf89DP3/aefPPrlMR1h1yQ==" crossorigin="anonymous"></script>
+
+
+
+    <!-- custom javascript main.js file -->
+    <script src="main.js"></script>
+</body>
+</html>

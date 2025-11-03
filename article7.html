@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HaritSook</title>
+
+    <!-- link to icons-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- custom style.css file -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    
+    <!-- Header -->
+       <header id="header" class="bg-dark">
+           <nav class="container navbar">
+               <a href="/index.html" class="nav-brand text-light">
+                    HaritSook
+                </a>
+
+                <!-- toggle button -->
+                <button class="toggle-button">
+                    <span><i class="fas fa-bars"></i></span>
+                </button>
+
+                <!-- collapse on toggle button click -->
+                <div class="collapse">
+                    <ul class="navbar-nav">
+                        <a href="./index.html" class="nav-link">Home</a>
+                        <a href="./resume.html" class="nav-link">Resume</a>
+                    </ul>
+                </div>
+
+                  <!-- collapse on toggle button click -->
+                  <div class="collapse">
+                      <ul class="navbar-nav">
+                            <a href="mailto:HaritSook@gmail.com" class="nav-link"> <i class="fa-solid fa-envelope"></i> </a>
+                            <a href="https://www.linkedin.com/in/harit-sookmeewiriya-a9b87923b/" class="nav-link" target="_blank" rel="noopener noreferrer"> <i class="fa-brands fa-linkedin"></i> </a>
+                            <a href="https://github.com/Yakultt?tab=repositories" class="nav-link" target="_blank" rel="noopener noreferrer"> <i class="fa-brands fa-github"></i> </a>
+                      </ul>
+                  </div>
+           </nav>
+       </header>
+    <!-- end of header -->
+
+    <!-- Main Site -->
+       <main id="site-main">
+
+            <!-- Post Content -->
+                <section class="container">
+                    <article id="post">
+                        <!-- article heading -->
+                        <div class="headings text-center">
+                            <div class="category">
+                                <p class="nav-link-dark">Basic CTF Knowledge<p>
+                            </div>
+
+                            <div class="title">
+                                <h2 class="text-title text-dark display-1">Mask Attacks
+                                </h2>
+                            </div>
+
+                            <div class="meta">
+                                <p class="link display-2 text-secondary px-1">
+                                    <i class="fas fa-clock text-primary"></i>  4/05/2025
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <!-- thumbnail  -->
+                        <div class="thumbnail mt-5">
+                            <img src="./assets/img7.jpg" class="thumbnail" alt="">
+                        </div>
+
+                        <!-- content -->
+                        <div class="content text-dark display-2 secondary-title mt-5">
+                            <p> One of the other interesting things that Hashcat can do, other than the dictionary attack I did in previous blogs where I compare common passwords to a hash,
+                                is that it can do whats called a Mask Attack. A mask attack is a targeted brute force where you tell Hashcat the password pattern you expect.
+                                For example “Capital letter + 5 lowercase + 2 digits” and only tries candidates that match that pattern. This makes cracking way faster than 
+                                blind brute force because you're only searching realistic passwords instead of every possible string. However the caveat
+                                to this is that you have to KNOW first what pattern the password might be. Maybe you found the /etc/login.defs file or the
+                                /etc/security/pwquality.conf.
+
+                            </p>
+
+                            <img src="./article7images/1.png" alt="" 
+                            style="display:block; margin:1.5rem auto; width:70%; height:auto; border-radius:10px;">
+                            
+                            
+                            <p> Given this password flag, I see that its 32 hex characters long which probably means that its md5 so i'm going to do the same
+                                thing as last time and do hashcat -m 0. However this time im going to put -a 3 to signal that its going to be a mask attack. After
+                                the -a 3, i'm going to put the file that contains the actual flag, then I am going to specify the format that
+                                the password is going to be. Now the challenge says that the 
+                                format of the flag is going to be flag{} and then 8 digits inside the curly braces. Now to actually put this into the hashcat,
+                                im going to do hashcat -m 0 -a 3 masking.txt flag{?d?d?d?d?d?d?d?d}. This basically tells hashcat that the password format is going to be
+                                the world flag with 8 digits inside so it doesnt have to go through any sort of dictionary. It just needs to generate passwords
+                                that meet that criteria.
+                            </p>
+
+                            <img src="./article7images/2.png" alt="" 
+                            style="display:block; margin:1.5rem auto; width:70%; height:auto; border-radius:10px;">
+                            
+                            <p> So now the cracking process has actually started and I am going to press "s" to signal that I want to know the status
+                            </p>
+                            
+                            <img src="./article7images/3.png" alt="" 
+                            style="display:block; margin:1.5rem auto; width:70%; height:auto; border-radius:10px;">
+
+                            <p>
+                                From the status, I can see that hashcat is generating all the different hashes that match the format that I gave it
+                            </p>
+
+                                
+                            <img src="./article7images/4.png" alt="" 
+                            style="display:block; margin:1.5rem auto; width:70%; height:auto; border-radius:10px;">
+
+                            <p>
+
+                                I gave it like a few seconds and it showed the flag as flag{56982567}. You can see that the flag matches the format that I gave it
+                                and this is much easier than the blind brute force than I did in the previous blogs because I cut down a lot of possibilites it could
+                                be by giving the format it should be
+                            </p>
+                            
+                            
+                            
+                        </div>
+                    </article>
+
+            
+                            
+                        
+
+   
+
+
+    <!-- masonry libray for horizontal grid -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js" integrity="sha512-JRlcvSZAXT8+5SQQAvklXGJuxXTouyq8oIMaYERZQasB8SBDHZaUbeASsJWpk0UUrf89DP3/aefPPrlMR1h1yQ==" crossorigin="anonymous"></script>
+
+
+
+    <!-- custom javascript main.js file -->
+    <script src="main.js"></script>
+</body>
+</html>
