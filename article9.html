@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HaritSook</title>
+
+    <!-- link to icons-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- custom style.css file -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    
+    <!-- Header -->
+       <header id="header" class="bg-dark">
+           <nav class="container navbar">
+               <a href="/index.html" class="nav-brand text-light">
+                    HaritSook
+                </a>
+
+                <!-- toggle button -->
+                <button class="toggle-button">
+                    <span><i class="fas fa-bars"></i></span>
+                </button>
+
+                <!-- collapse on toggle button click -->
+                <div class="collapse">
+                    <ul class="navbar-nav">
+                        <a href="./index.html" class="nav-link">Home</a>
+                        <a href="./resume.html" class="nav-link">Resume</a>
+                    </ul>
+                </div>
+
+                  <!-- collapse on toggle button click -->
+                  <div class="collapse">
+                      <ul class="navbar-nav">
+                            <a href="mailto:HaritSook@gmail.com" class="nav-link"> <i class="fa-solid fa-envelope"></i> </a>
+                            <a href="https://www.linkedin.com/in/harit-sookmeewiriya-a9b87923b/" class="nav-link" target="_blank" rel="noopener noreferrer"> <i class="fa-brands fa-linkedin"></i> </a>
+                            <a href="https://github.com/Yakultt?tab=repositories" class="nav-link" target="_blank" rel="noopener noreferrer"> <i class="fa-brands fa-github"></i> </a>
+                      </ul>
+                  </div>
+           </nav>
+       </header>
+    <!-- end of header -->
+
+    <!-- Main Site -->
+       <main id="site-main">
+
+            <!-- Post Content -->
+                <section class="container">
+                    <article id="post">
+                        <!-- article heading -->
+                        <div class="headings text-center">
+                            <div class="category">
+                                <p class="nav-link-dark">Basic CTF Knowledge<p>
+                            </div>
+
+                            <div class="title">
+                                <h2 class="text-title text-dark display-1">SQL Injecting OWASP Juice Shop
+                                </h2>
+                            </div>
+
+                            <div class="meta">
+                                <p class="link display-2 text-secondary px-1">
+                                    <i class="fas fa-clock text-primary"></i>  10/19/2025
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <!-- thumbnail  -->
+                        <div class="thumbnail mt-5">
+                            <img src="./assets/img9.jpg" class="thumbnail" alt="">
+                        </div>
+
+                        <!-- content -->
+                        <div class="content text-dark display-2 secondary-title mt-5">
+                            <p> So in this CTF challenge, I am given a zip file that I have to crack the password of it to extract the flag inside the zip. As you can see
+                                in the screenshot below, whenever I try to extract the flag.txt file, I am met with a prompt to type a password that I do not know
+
+                            </p>
+
+                            <img src="./article8images/1.png" alt="" 
+                            style="display:block; margin:1.5rem auto; width:70%; height:auto; border-radius:10px;">
+                            
+                            
+                            <p> Now there are two ways that I can go about this problem. One is that I can use a utility called fcrackzip. This is one of the standard
+                                tools thats apart of the kali software repositories so if you don't have it on your machine you can just do sudo apt install fcrackzip. 
+                            </p>
+
+                            <img src="./article8images/2.png" alt="" 
+                            style="display:block; margin:1.5rem auto; width:70%; height:auto; border-radius:10px;">
+                            
+                            <p> I first did fcrackzip -h. The -h flag basically tells me the "help" manual for the command. The main flags I will be using is the u, D, and p flag. 
+                                The -u flag tells fcrackzip that we actually want to unzip the zip file. the -D flag makes it so that we use a dictionary attack where we provide a 
+                                list of commonly used passwords and try to brute force our way in. Lastly the -p flags makes it so that it tells fcrackzip to use a password list (a file containing candidate passwords), 
+                                or a literal password string if you pass one directly. In practice you combine -D and -p to feed fcrackzip a wordlist file and have it try each entry while attempting to unzip the archive.
+                                After providing the flags, I then supply the rockyou.txt file (the file that contains all the common passwords) and then the encrypted zip file.
+                            </p>
+                            
+                            <img src="./article8images/3.png" alt="" 
+                            style="display:block; margin:1.5rem auto; width:70%; height:auto; border-radius:10px;">
+
+                            <p>
+                                After a few minutes, you can see that fcrackzip found the password!. 
+                            </p>
+
+                                
+                            <img src="./article8images/4.png" alt="" 
+                            style="display:block; margin:1.5rem auto; width:70%; height:auto; border-radius:10px;">
+
+                            <p>
+
+                                I mentioned that there were two ways that we can solve this. The other way is by using a utility called JohnTheRipper. Now if you are not
+                                familiar with JohnTheRipper, its a password cracking application that uses brute force too. Both fcrackzip and JohnTheRipper have their strengths, however one thing
+                                I like about JohnTheRipper is that it has a number of different utilities that you can run with it to actually convert different password types into hashes that
+                                are actually crackable. As you can see in the screenshot above there are a bunch of different scripts to convert these different hashes. These scripts are nice
+                                but the one that I want to use is called zip2john. 
+                            </p>
+                            
+
+                            <img src="./article8images/5.png" alt="" 
+                            style="display:block; margin:1.5rem auto; width:70%; height:auto; border-radius:10px;">
+
+                            <p>
+                                Now if I do zip2john and then the zip file, its then going to actually output a special type of hash that is designed for JohnTheRipper to actually
+                                crack that password hash. What im going to do is output the command to a file called zip.hash by doing the command again zip2john password.zip > zip.hash
+
+                            </p>
+
+                            <img src="./article8images/6.png" alt="" 
+                            style="display:block; margin:1.5rem auto; width:70%; height:auto; border-radius:10px;">
+
+                            <p>
+                                Now that I actually have the file that contains the hash, I am going to run john --format=pkzip --wordlist=/usr/share/wordlists/rockyou.txt zip.hash. The format flag
+                                just tells the format that the file was zipped in. The wordlist flag specifies the file that contains the common passwords that we will be using to brute force the password.
+                                Then you just have to provide the zipped file you want to crack. And we see we got the password!
+
+                            </p>
+                            
+
+
+                        </div>
+                    </article>
+
+            
+                            
+                        
+
+   
+
+
+    <!-- masonry libray for horizontal grid -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js" integrity="sha512-JRlcvSZAXT8+5SQQAvklXGJuxXTouyq8oIMaYERZQasB8SBDHZaUbeASsJWpk0UUrf89DP3/aefPPrlMR1h1yQ==" crossorigin="anonymous"></script>
+
+
+
+    <!-- custom javascript main.js file -->
+    <script src="main.js"></script>
+</body>
+</html>
