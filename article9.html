@@ -78,66 +78,74 @@
 
                         <!-- content -->
                         <div class="content text-dark display-2 secondary-title mt-5">
-                            <p> So in this CTF challenge, I am given a zip file that I have to crack the password of it to extract the flag inside the zip. As you can see
-                                in the screenshot below, whenever I try to extract the flag.txt file, I am met with a prompt to type a password that I do not know
+                            <p> First off for this blog, I want to give a little intro to sql injection. SQL is the language that websites use to talk 
+                                to databases that store site data. This can range from product listings to user accounts and payment info. SQL injection happens when a site 
+                                puts user input straight into those database queries, which lets us "inject" special characters or SQL code to read, change, or
+                                 delete data.
 
                             </p>
 
-                            <img src="./article8images/1.png" alt="" 
+                            <img src="./article9images/1.png" alt="" 
                             style="display:block; margin:1.5rem auto; width:70%; height:auto; border-radius:10px;">
                             
                             
-                            <p> Now there are two ways that I can go about this problem. One is that I can use a utility called fcrackzip. This is one of the standard
-                                tools thats apart of the kali software repositories so if you don't have it on your machine you can just do sudo apt install fcrackzip. 
+                            <p> Here I can see that we have a login page from our OWASP juice shop website. I can see that it accepts a email and password. I'm just going to 
+                                put test for both the email and password just to see what happens
                             </p>
 
-                            <img src="./article8images/2.png" alt="" 
+                            <img src="./article9images/2.png" alt="" 
                             style="display:block; margin:1.5rem auto; width:70%; height:auto; border-radius:10px;">
                             
-                            <p> I first did fcrackzip -h. The -h flag basically tells me the "help" manual for the command. The main flags I will be using is the u, D, and p flag. 
-                                The -u flag tells fcrackzip that we actually want to unzip the zip file. the -D flag makes it so that we use a dictionary attack where we provide a 
-                                list of commonly used passwords and try to brute force our way in. Lastly the -p flags makes it so that it tells fcrackzip to use a password list (a file containing candidate passwords), 
-                                or a literal password string if you pass one directly. In practice you combine -D and -p to feed fcrackzip a wordlist file and have it try each entry while attempting to unzip the archive.
-                                After providing the flags, I then supply the rockyou.txt file (the file that contains all the common passwords) and then the encrypted zip file.
+                            <p> Okay, as expected it just said invalid email and password. However now im going to do test' as the username.
                             </p>
                             
-                            <img src="./article8images/3.png" alt="" 
+                            <img src="./article9images/3.png" alt="" 
                             style="display:block; margin:1.5rem auto; width:70%; height:auto; border-radius:10px;">
 
                             <p>
-                                After a few minutes, you can see that fcrackzip found the password!. 
+                                Okay cool! Now it says [object Object]. Now you might be wondering what the heck that means and why did I do test' as the username. [object Object] means
+                                that the server sent back some structured data (like JSON to respond to my request) but the website just printed it raw instead of showing the actual 
+                                message. Basically, the backend returned an object and the front end didnt format it, so the browser showed the default text for objects. 
+                                I typed test' on purpose because the extra single quote is a quick probe. Many sites build database queries by sticking what you type straight 
+                                into SQL. Adding a quote can break that query. If the backend isn't careful, that quote can make the database run something different than the developer intended,
+                                which is the basic idea behind SQL injection. Seeing an error or [object Object] after test' is a good sign that user input is getting passed through in a risky way.
                             </p>
 
                                 
-                            <img src="./article8images/4.png" alt="" 
+                            <img src="./article9images/4.png" alt="" 
                             style="display:block; margin:1.5rem auto; width:70%; height:auto; border-radius:10px;">
 
-                            <p>
+                            <p> I can confirm this by doing inspect on the page and then going to the network section and seeing that there is a 500 error here. 500 error is just a
+                                generic message indicating that the website's server encountered an unexpected problem and could not complete the request. When I actually look at the response,
+                                I can see that the server gave me a SQLITE error. SQLITE is just a type of database that is really common in containerized web pages cause its super portable.
+                                If you look more down on the request, you can see the sql query it was trying to execute. "SELECT * FROM Users WHERE email = 'test'' AND password =
+                                '098f6bcd4621d373cade4e832627b4f6' AND deletedAt IS NULL". This sql query means that it wanted to select a user from the database where the email = test and 
+                                the password was this hash that the source string was test. However, you can see that the reason this request crashed is because I put the single quote at the end of
+                                test. So now instead of test being neatly wrapped up in single quotes like 'test', the extra quote has actually broken the query.
 
-                                I mentioned that there were two ways that we can solve this. The other way is by using a utility called JohnTheRipper. Now if you are not
-                                familiar with JohnTheRipper, its a password cracking application that uses brute force too. Both fcrackzip and JohnTheRipper have their strengths, however one thing
-                                I like about JohnTheRipper is that it has a number of different utilities that you can run with it to actually convert different password types into hashes that
-                                are actually crackable. As you can see in the screenshot above there are a bunch of different scripts to convert these different hashes. These scripts are nice
-                                but the one that I want to use is called zip2john. 
                             </p>
                             
+                            <p> Now, lets think about how I can take advantage of this vulnerability to make the query do things that I want it to do instead of continuing as normal. This is where
+                                we actually start doing the sql injection. From the sql query, if we are actually going to be selecting something from our database, what would happen if I put
+                                ' OR 1=1-- for the email. So the whole sql query would look like this "SELECT * FROM Users WHERE email = '' OR 1=1--' AND password =
+                                '098f6bcd4621d373cade4e832627b4f6' AND deletedAt IS NULL". Basically what this says is that the email is blank due to the '', or 1=1 (which is always true),
+                                and then the two dashes mean that its a sql comment. So from a high level overview, I have transformed the sql query so it just becomes this 
+                                "SELECT * FROM Users WHERE email = '' OR 1=1--'" (disregarding the password and the null) and when we are trying to select a user from the user table, it will read
+                                1=1 which is always true, then it means i'm able to log in successfully to the server. 
 
-                            <img src="./article8images/5.png" alt="" 
-                            style="display:block; margin:1.5rem auto; width:70%; height:auto; border-radius:10px;">
 
-                            <p>
-                                Now if I do zip2john and then the zip file, its then going to actually output a special type of hash that is designed for JohnTheRipper to actually
-                                crack that password hash. What im going to do is output the command to a file called zip.hash by doing the command again zip2john password.zip > zip.hash
 
                             </p>
 
-                            <img src="./article8images/6.png" alt="" 
+                            <img src="./article9images/5.png" alt="" 
+                            style="display:block; margin:1.5rem auto; width:70%; height:auto; border-radius:10px;">
+
+
+                            <img src="./article9images/6.png" alt="" 
                             style="display:block; margin:1.5rem auto; width:70%; height:auto; border-radius:10px;">
 
                             <p>
-                                Now that I actually have the file that contains the hash, I am going to run john --format=pkzip --wordlist=/usr/share/wordlists/rockyou.txt zip.hash. The format flag
-                                just tells the format that the file was zipped in. The wordlist flag specifies the file that contains the common passwords that we will be using to brute force the password.
-                                Then you just have to provide the zipped file you want to crack. And we see we got the password!
+                                I just put in ' OR 1=1-- as the email and as you can see it worked! 
 
                             </p>
                             
